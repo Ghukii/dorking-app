@@ -279,7 +279,7 @@
     <string>Сделать запрос</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="request_description">
+  <widget class="QLineEdit" name="request_description">
    <property name="geometry">
     <rect>
      <x>420</x>
@@ -302,7 +302,7 @@
     <string>Описание запроса</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="resent_requests">
+  <widget class="QPushButton" name="recent_requests">
    <property name="geometry">
     <rect>
      <x>410</x>

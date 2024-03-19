@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, \
     QLabel, QLineEdit, QTextEdit, QComboBox
 from PyQt5 import uic
+import csv
 
 def setDefaultLanguage():
     file = open('logs/language.txt', 'w')
@@ -42,6 +43,7 @@ class GUI(QWidget):
         self.label_cache = self.findChild(QLabel, 'label_cache')
         self.label_related = self.findChild(QLabel, 'label_related')
         self.label_filetype = self.findChild(QLabel, 'label_filetype')
+        self.label_description = self.findChild(QLabel, 'label_description')
 
         self.tag_line = self.findChild(QLineEdit, 'tag_line')
         self.phrase_line = self.findChild(QLineEdit, 'phrase_line')
@@ -51,12 +53,14 @@ class GUI(QWidget):
         self.cache_line = self.findChild(QLineEdit, 'cache_line')
         self.related_line = self.findChild(QLineEdit, 'related_line')
         self.filetype_line = self.findChild(QLineEdit, 'filetype_line')
+        self.request_description = self.findChild(QLineEdit, 'request_description')
 
         self.languageBox = self.findChild(QComboBox, 'language')
         
         self.generate = self.findChild(QPushButton, 'generate')
         self.themeButton = self.findChild(QPushButton, 'theme')
         self.requestButton = self.findChild(QPushButton, 'request')
+        self.recentRequests = self.findChild(QPushButton, 'recent_requests')
 
         self.output = self.findChild(QTextEdit, 'request_output')
 
@@ -99,6 +103,9 @@ class GUI(QWidget):
             self.label_related.setText('Связанные сайты')
             self.label_filetype.setText('Файл')
             self.generate.setText('Сгенерировать')
+            self.requestButton.setText('Сделать запрос')
+            self.recentRequests.setText('Предыдущие запросы')
+            self.label_description.setText('Описание запроса')
             if get_theme() == 'dark':
                 self.themeButton.setText('Темная')
             else:
@@ -115,6 +122,9 @@ class GUI(QWidget):
             self.label_filetype.setText('File')
             self.generate.setText('Generate')
             self.themeButton.setText(get_theme())
+            self.requestButton.setText('Make request')
+            self.recentRequests.setText('Recent requests')
+            self.label_description.setText('Request description')
         
         
     def change_theme(self):
@@ -150,6 +160,15 @@ class GUI(QWidget):
             request += 'related:' + self.related_line.text() + ' '
         if self.filetype_line.text():
             request += 'filetype:' + self.filetype_line.text() + ' '
+
+        with open('logs/recent.csv', 'r+') as f:
+            writer = csv.writer(f, delimiter=';')
+
+            if self.request_description.text():
+                pass
+            
+            #writer.writerow(request.split(" "))
+        f.close()
 
         self.output.setText(request)
 
