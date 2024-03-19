@@ -160,16 +160,18 @@ class GUI(QWidget):
             request += 'related:' + self.related_line.text() + ' '
         if self.filetype_line.text():
             request += 'filetype:' + self.filetype_line.text() + ' '
-
-        with open('logs/recent.csv', 'r+') as f:
-            writer = csv.writer(f, delimiter=';')
+        '''
+        with open('logs/recent.csv', 'w+', newline='') as f:
+            fieldnames = ['request', 'description']
+            writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=';')
 
             if self.request_description.text():
-                pass
+                writer.writerow({'request': request, 'description': self.request_description.text()})
+            else:
+                writer.writerow({'request': request, 'description': ''})
             
-            #writer.writerow(request.split(" "))
         f.close()
-
+        '''
         self.output.setText(request)
 
         
